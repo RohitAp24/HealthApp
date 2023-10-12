@@ -1,0 +1,22 @@
+<form method="post" >
+    {% csrf_token %}
+    
+    <!-- Doctor -->
+    <label for="doctor">Doctor:</label>
+    <select name="doctor" id="doctor">
+      <option value="1">Doctor 1</option>
+      <option value="2">Doctor 2</option>
+      <option value="3">Doctor 3</option>
+      <!-- Add more options as needed -->
+    </select>
+    
+    <!-- Appointment Date -->
+    <label for="appointment_date">Appointment Date:</label>
+    <input type="date" name="appointment_date" id="appointment_date">
+    
+    <!-- Appointment Time -->
+    <label for="appointment_time">Appointment Time:</label>
+    <input type="time" name="appointment_time" id="appointment_time">
+    
+    <button type="submit">Submit</button>
+  </form>

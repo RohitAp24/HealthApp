@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Registration Form</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+      margin: 0;
+      padding: 0;
+      background-color: #cbe6f5;
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      width: 400px;
+      height: 500px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    table {
+      width: 100%;
+    }
+    
+    th, td {
+      padding: 10px 0;
+      text-align: left;
+    }
+    
+    input[type="submit"] {
+      margin-top: 2cm;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="radio"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .radio-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .radio-group label {
+      margin-right: 10px;
+    }
+
+    label {
+      color: #333;
+    }
+
+    .title {
+      text-align: right;
+      margin-right: 20px;
+    }
+  </style>
+  <script>
+    function validateForm() {
+      var nameInput = document.getElementById("name");
+      var name = nameInput.value.trim();
+
+      if (!/^[a-zA-Z ]+$/.test(name)) {
+        alert("Name can only contain letters and spaces.");
+        nameInput.value = '';
+        nameInput.focus();
+        return false;
+      }
+
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Password and Confirm Password must match.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function formatPhoneNumber(input) {
+      var phoneNumber = input.value.replace(/\D/g, "");
+      phoneNumber = phoneNumber.slice(0, 10);
+      input.value = phoneNumber;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">User Registration Form</h1>
+    <form method="POST" onsubmit="return validateForm()">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      
+      <table>
+        <tr>
+          <th><label for="name">Name:</label></th>
+          <td><input type="text" id="name" name="name" onkeypress="return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32" required></td>
+        </tr>
+        
+        <tr>
+          <th><label for="age">Age:</label></th>
+          <td><input type="number" id="age" name="age" required></td>
+        </tr>
+        <tr>
+          <th><label for="email">Email:</label></th>
+          <td><input type="email" id="email" name="email" required></td>
+        </tr>
+        <tr>
+          <th><label for="phone">Phone Number:</label></th>
+          <td><input type="text" id="phone" name="phone" maxlength="12" oninput="formatPhoneNumber(this)" required></td>
+        </tr>
+
+        <tr>
+          <th><label for="username">Username:</label></th>
+          <td><input type="text" id="username" name="username" required></td>
+        </tr> 
+        <tr>
+          <th><label for="password">Password:</label></th>
+          <td><input type="password" id="password" name="password" required></td>
+        </tr>
+        <tr>
+          <th><label for="confirmPassword">Confirm Password:</label></th>
+          <td><input type="password" id="confirmPassword" name="confirmPassword" required></td>
+        </tr>
+        <tr>
+          <th><label for="gender">Gender:</label></th>
+          <td class="radio-group">
+            <input type="radio" id="male" name="gender" value="male" required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female" required>
+            <label for="female">Female</label>
+          </td>
+        </tr>
+      </table>
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>

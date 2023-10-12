@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+  <style>
+    body {
+      background-color: #cbe6f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h1 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-group .forgot-password {
+      font-size: 12px;
+      text-align: right;
+      margin-top: 5px;
+    }
+
+    .form-group .login-button {
+      width: auto;
+      background-color: #4caf50; /* Restored the button color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-decoration: none; /* Added to remove the underline */
+    }
+
+    .form-group .login-button:hover {
+      background-color: #45a049;
+    }
+
+    .form-group .signup-link {
+      text-align: center;
+    }
+
+    .form-group .signup-link a {
+      color: #333;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login Form</h1>
+    <form method="POST">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group" style="margin-bottom: 10px;">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <div class="forgot-password">
+          <a href="#" style="text-decoration: none;">Forgot Password?</a> <!-- Removed the underline -->
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Login" class="login-button">
+      </div>
+      <div class="form-group signup-link">
+        Don't have an account? <a href="registration" style="text-decoration: none;">Signup</a> <!-- Removed the underline -->
+      </div>
+      
+    </form>
+  </div>
+</body>
+</html>

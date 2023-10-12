@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+    body {
+      background-color: lightblue;
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    .form-box {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    </style>
+    
+    <body>
+      <div class="container">
+        <div class="form-box">
+          <form method="POST" action="{% url 'doctor_availability' %}">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    
+            <input type="text" id="datepicker" name="unavailable_dates[]" readonly>
+    
+            <button type="submit">Save Availability</button>
+          </form>
+        </div>
+      </div>
+    
+      <script>
+      $(function() {
+        $("#datepicker").datepicker({
+          dateFormat: "yy-mm-dd",
+          multiSelect: true
+        });
+      });
+      </script>
+    </body>
+    

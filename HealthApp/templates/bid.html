@@ -1,0 +1,78 @@
+<?php
+// Check if the user is logged in
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Database connection
+$conn = mysqli_connect("localhost", "username", "password", "database_name");
+
+// Handle product upload form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $starting_price = $_POST['starting_price'];
+    $end_date = $_POST['end_date'];
+
+    // Validate form input (you can add more validation as per your requirements)
+    if (empty($name) || empty($description) || empty($starting_price) || empty($end_date)) {
+        $error = "Please fill in all the required fields.";
+    } else {
+        // Prepare the data for database insertion
+        $name = mysqli_real_escape_string($conn, $name);
+        $description = mysqli_real_escape_string($conn, $description);
+        $starting_price = floatval($starting_price);
+        $end_date = mysqli_real_escape_string($conn, $end_date);
+
+        $seller_id = $_SESSION['user_id'];
+
+        // Insert the product into the database
+        $query = "INSERT INTO products (name, description, starting_price, end_date, seller_id) VALUES ('$name', '$description', $starting_price, '$end_date', $seller_id)";
+
+        if (mysqli_query($conn, $query)) {
+            $success = "Product uploaded successfully!";
+        } else {
+            $error = "Error uploading the product: " . mysqli_error($conn);
+        }
+    }
+}
+
+mysqli_close($conn);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Upload</title>
+</head>
+<body>
+    <h1>Product Upload</h1>
+
+    <?php if (isset($error)): ?>
+        <div style="color: red;"><?php echo $error; ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($success)): ?>
+        <div style="color: green;"><?php echo $success; ?></div>
+    <?php endif; ?>
+
+    <form action="upload_product.php" method="post">
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <label for="starting_price">Starting Price:</label>
+        <input type="number" step="0.01" id="starting_price" name="starting_price" required><br>
+
+        <label for="end_date">Auction End Date:</label>
+        <input type="date" id="end_date" name="end_date" required><br>
+
+        <input type="submit" value="Upload Product">
+    </form>
+</body>
+</html>
